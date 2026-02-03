@@ -10,13 +10,25 @@ global toggle := false
 
 #HotIf WinActive("ahk_exe 7DaysToDie.exe")
 
+; Lógica da Aspa Simples (') - Alterna a trava com um toque
+$':: {
+    global toggle
+    if (toggle) {
+        toggle := false
+        Send("{w up}")
+    } else {
+        toggle := true
+        Sleep(100)
+        Send("{w down}")
+    }
+}
+
+; Lógica do W - Mantém o clique duplo (300ms)
 ~$w:: {
     global toggle
     static last_press := 0
     
-    ; Espera você soltar o W antes de prosseguir, impedindo o loop de "tecla segurada"
     KeyWait("w")
-    
     current_time := A_TickCount
     
     if (toggle) {
@@ -25,7 +37,7 @@ global toggle := false
         return
     }
     
-    if (current_time - last_press < 900) {
+    if (current_time - last_press < 300) {
         toggle := true
         Sleep(200)
         Send("{w down}")
@@ -35,6 +47,7 @@ global toggle := false
     }
 }
 
+; Destrava ao apertar S (ré)
 ~s:: {
     global toggle := false
     Send("{w up}")

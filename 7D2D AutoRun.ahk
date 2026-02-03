@@ -25,7 +25,7 @@ global toggle := false
     }
     
     ; Verifica clique duplo com seu intervalo personalizado de 900ms
-    if (current_time - last_press < 900) {
+    if (current_time - last_press < 300) {
         toggle := true
         Sleep(200) ; Seu delay de estabilidade testado
         Send("{w down}")
@@ -42,3 +42,4 @@ global toggle := false
 }
 
 #HotIf
+
